@@ -11,23 +11,30 @@ import {
   ImageBackground,
 } from 'react-native';
 import {icons, images, SIZES, COLORS, FONTS} from '../constants';
+import LinearGradient from 'react-native-linear-gradient';
 
 const OnBoard = ({navigation}) => {
   return (
-    <SafeAreaView style={styles.container}>
+    <LinearGradient
+      style={styles.container}
+      start={{x: 0, y: 0}}
+      end={{x: 1, y: 1}}
+      // colors={['#000046', '#1CB5E0']}
+      colors={['#1FA2FF', '#12D8FA', '#A6FFCB']}>
       {/* <ImageBackground
         style={{flex: 1}}
         source={require('../assets/images/pngtree-cartoon-kid-meadow-green-background-material-image_124473.jpg')}> */}
       <View style={styles.contentCenter}>
         <View style={{flex: 1, alignItems: 'center'}}>
           <Text style={{...FONTS.titleHome}}>Welcome to QR Scanner</Text>
-          {/* <Image
-              // source={require('../assets/images/logo-wali.png')}
-              style={{
-                width: SIZES.width * 0.8,
-                marginTop: 50,
-              }}
-            /> */}
+          <Image
+            source={require('../assets/images/arInt.png')}
+            style={{
+              marginTop: 50,
+              width: SIZES.width * 0.8,
+              height: SIZES.width * 0.8,
+            }}
+          />
         </View>
         <TouchableOpacity
           onPress={() => {
@@ -46,7 +53,7 @@ const OnBoard = ({navigation}) => {
         </TouchableOpacity>
       </View>
       {/* </ImageBackground> */}
-    </SafeAreaView>
+    </LinearGradient>
   );
 };
 export default OnBoard;

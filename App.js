@@ -5,6 +5,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 const Stack = createStackNavigator();
 import Home from './src/screens/Home';
+import Results from './src/screens/Results';
 import OnBoard from './src/screens/OnBoarding';
 
 const App = () => {
@@ -14,6 +15,7 @@ const App = () => {
         screenOptions={{headerShown: false}}
         initialRouteName={'OnBoard'}>
         <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Results" component={Results} />
         <Stack.Screen name="OnBoard" component={OnBoard} />
       </Stack.Navigator>
     </NavigationContainer>

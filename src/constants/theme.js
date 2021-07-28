@@ -70,7 +70,7 @@ export const FONTS = {
     fontSize: 42,
     textAlign: 'center',
     marginTop: 40,
-    color: '#007795',
+    color: '#fff',
 
     // fontWeight: 'bold',
   },
