@@ -1,17 +1,9 @@
+/* eslint-disable react/self-closing-comp */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
-import React, {Component} from 'react';
+import React from 'react';
 
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  SafeAreaView,
-  Linking,
-  View,
-  Alert,
-} from 'react-native';
+import {StyleSheet, Text, SafeAreaView, View} from 'react-native';
 
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import {RNCamera} from 'react-native-camera';
@@ -33,23 +25,13 @@ const Home = ({navigation}) => {
     arr.push(response);
     await AsyncStorage.setItem('FAVORITES', JSON.stringify(arr));
   };
-  // const storeData = async value => {
-  //   console.log('async');
-  //   try {
-  //     const jsonValue = JSON.stringify(value);
-  //     await AsyncStorage.setItem('@storage_Key', jsonValue);
-  //   } catch (e) {
-  //     // saving error
-  //     console.log(e);
-  //   }
-  // };
+
   function renderHome() {
     let cam;
     return (
       <LinearGradient
         start={{x: 0, y: 0}}
         end={{x: 1, y: 1}}
-        // colors={['#000046', '#1CB5E0']}
         colors={['#1FA2FF', '#12D8FA', '#A6FFCB']}
         style={styles.container}>
         <View style={styles.preview}>
@@ -67,7 +49,7 @@ const Home = ({navigation}) => {
             }></RNCamera>
         </View>
         <View>
-          <Text style={styles.title}>QR Code Scanner</Text>
+          <Text style={styles.title}>Smart Cart QR Code Scanner</Text>
         </View>
         <LinearGradient
           start={{x: 0, y: 0}}
@@ -75,8 +57,9 @@ const Home = ({navigation}) => {
           colors={['#ffff', '#ffffff']}
           style={styles.cardView}>
           <Text style={styles.centerText}>
-            📱📸🔥Consectetur aute cupidatat nisi amet commodo et qui ad
-            excepteur.cupidatat nisi amet commodo et qui ad excepteur.
+            Once you see a QR code use your device camera to capture the QR
+            code. Simply point the camera at the QR code to be scanned and
+            you’re done.
           </Text>
         </LinearGradient>
       </LinearGradient>

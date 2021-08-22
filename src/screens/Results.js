@@ -89,7 +89,7 @@ const Home = ({navigation, route}) => {
           end={{x: 1, y: 1}}
           colors={['#ffff', '#ffffff']}
           style={styles.cardView2}>
-          <Text style={styles.centerTextRes}>📱📸🔥Consectetur</Text>
+          <Text style={styles.centerTextRes}>📱📸🔥 Consectetur</Text>
           <Text style={styles.centerText2}>{response.data}</Text>
         </LinearGradient>
         <LinearGradient

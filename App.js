@@ -1,25 +1,62 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {View, StyleSheet, Text, Button} from 'react-native';
+import MQTTConnection from './src/screens/Mqtt';
+import {Buffer} from 'buffer';
+// global.Buffer = Buffer;
+import MqttNotificationsManager from './realtimeManager';
+MqttNotificationsManager.create('bob', {
+  uri: 'mqtt://broker.mqttdashboard.com:1883',
+});
+export default function App() {
+  useEffect(() => {
+    // this.mqttConnect = new MQTTConnection();
+    // this.mqttConnect.onMQTTConnect = this.onMQTTConnect;
+    // this.mqttConnect.onMQTTLost = onMQTTLost;
+    // this.mqttConnect.onMQTTMessageArrived = this.onMQTTMessageArrived;
+    // this.mqttConnect.onMQTTMessageDelivered = this.onMQTTMessageDelivered;
+    // this.mqttConnect.connect('broker.mqtt-dashboard.com', 8000);
+    // onMQTTConnect = () => {
+    //   console.log('App onMQTTConnect');
+    //   this.mqttConnect.subscribeChannel('hanth2');
+    // };
+    // const onMQTTLost = () => {
+    //   console.log('App onMQTTLost');
+    // };
+    // onMQTTMessageArrived = message => {
+    //   console.log('App onMQTTMessageArrived: ', message);
+    //   console.log(
+    //     'App onMQTTMessageArrived payloadString: ',
+    //     message.payloadString,
+    //   );
+    // };
+    // onMQTTMessageDelivered = message => {
+    //   console.log('App onMQTTMessageDelivered: ', message);
+    // };
+    // return () => {
+    //   this.mqttConnect.close();
+    // };
+  }, []);
 
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-
-const Stack = createStackNavigator();
-import Home from './src/screens/Home';
-import Results from './src/screens/Results';
-import OnBoard from './src/screens/OnBoarding';
-
-const App = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{headerShown: false}}
-        initialRouteName={'OnBoard'}>
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="Results" component={Results} />
-        <Stack.Screen name="OnBoard" component={OnBoard} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <View style={styles.container}>
+      <Text>react_native_mqtt</Text>
+      <Button
+        title="Press me"
+        onPress={() =>
+          this.mqttConnect.send(
+            'hanth2',
+            'message send to channel hanth2 again',
+          )
+        }
+      />
+    </View>
   );
-};
+}
 
-export default App;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

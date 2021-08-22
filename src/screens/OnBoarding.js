@@ -1,16 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  SafeAreaView,
-  TouchableOpacity,
-  ImageBackground,
-} from 'react-native';
-import {icons, images, SIZES, COLORS, FONTS} from '../constants';
+import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {SIZES, COLORS, FONTS} from '../constants';
 import LinearGradient from 'react-native-linear-gradient';
 
 const OnBoard = ({navigation}) => {
@@ -19,14 +11,10 @@ const OnBoard = ({navigation}) => {
       style={styles.container}
       start={{x: 0, y: 0}}
       end={{x: 1, y: 1}}
-      // colors={['#000046', '#1CB5E0']}
       colors={['#1FA2FF', '#12D8FA', '#A6FFCB']}>
-      {/* <ImageBackground
-        style={{flex: 1}}
-        source={require('../assets/images/pngtree-cartoon-kid-meadow-green-background-material-image_124473.jpg')}> */}
       <View style={styles.contentCenter}>
         <View style={{flex: 1, alignItems: 'center'}}>
-          <Text style={{...FONTS.titleHome}}>Welcome to QR Scanner</Text>
+          <Text style={{...FONTS.titleHome}}>Smart Cart</Text>
           <Image
             source={require('../assets/images/arInt.png')}
             style={{
@@ -52,7 +40,6 @@ const OnBoard = ({navigation}) => {
           <Text style={{...FONTS.h3, color: COLORS.white}}>Let's Go</Text>
         </TouchableOpacity>
       </View>
-      {/* </ImageBackground> */}
     </LinearGradient>
   );
 };
