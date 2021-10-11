@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Modal,
   Text,
+  ImageBackground,
   Button,
 } from 'react-native';
 import MQTTConnection from './src/screens/Mqtt';
@@ -18,9 +19,30 @@ import {icons, images, SIZES, COLORS, FONTS} from './src/constants';
 // MqttNotificationsManager.create('bob', {
 //   uri: 'mqtt://broker.mqttdashboard.com:1883',
 // });
-
+// #NME, Tik Tac
+// #TEMP, 30.11
+// #TQTS, 5
+// #STOT, 52.48
 export default function App() {
-  useEffect(() => {}, []);
+  const [product, setProduct] = useState([
+    {
+      name: ' mango',
+      subTotal: ' 102.48',
+      temp: ' 20.41',
+      totalQty: ' 3',
+      totalValue: '56.50',
+    },
+    {
+      name: ' Banana',
+      subTotal: ' 102.48',
+      temp: ' 20.41',
+      totalQty: '3',
+      totalValue: '56.50',
+    },
+  ]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible1, setModalVisible1] = useState(false);
+  // useEffect(() => {}, []);
   let name = '';
   let temp = '';
   let totalQty = '';
@@ -78,8 +100,12 @@ export default function App() {
         }
         if (strFirstThree === '#TVA') {
           console.log('TEMP', msg.data);
-          totalValue = msg.data;
-          const product = {
+
+          var text = msg.data;
+          var fields = text.split(',');
+          totalValue = fields[1];
+
+          const newProduct = {
             name: name,
             temp: temp,
             totalQty: totalQty,
@@ -87,7 +113,12 @@ export default function App() {
             totalValue: totalValue,
           };
           console.log('product', product);
-          setProduct(product);
+
+          setProduct(prevArray => [...prevArray, newProduct]);
+        }
+        if (strFirstThree === '#STP') {
+          console.log('product--<', product);
+          setModalVisible1(true);
         }
       });
 
@@ -103,62 +134,89 @@ export default function App() {
     .catch(function (err) {
       console.log(err);
     });
-  const [product, setProduct] = useState({
-    name: 'Tik tac',
-    subTotal: '52.79',
-    temp: '30.11',
-    totalQty: '5',
-    totalValue: '52.79',
-  });
-  const [modalVisible, setModalVisible] = useState(false);
+  const newProduct = {
+    name: 'name',
+    temp: 'temp',
+    totalQty: 'totalQty',
+    subTotal: 'subTotal',
+    totalValue: 'totalValue',
+  };
+  const info = () => {
+    setModalVisible1(true);
+    console.log('product', product);
+    // setProduct(prevArray => [...prevArray, newProduct]);
+  };
+  const WholeNews = () => {
+    return product.map(function (pro, i) {
+      return (
+        <View key={i} style={styles.proCon}>
+          <Text style={styles.popText}>Product Name :{pro.name}</Text>
+          <Text style={styles.popText}>Temperature :{pro.temp}</Text>
+          <Text style={styles.popText}>Quantity :{pro.totalQty}</Text>
+          <Text style={styles.popText}>Sub Total :{pro.subTotal}</Text>
+          <Text style={styles.popText}>Total :{pro.totalValue}</Text>
+        </View>
+      );
+    });
+  };
+
   return (
     <StoreProvider store={store}>
-      <View style={styles.container}>
+      <ImageBackground
+        source={require('./src/assets/images/bg.png')}
+        style={styles.container}>
         <Text style={styles.title}>Smart Cart</Text>
-        <View style={styles.proCon}>
-          {product ? (
-            <Text style={styles.centerText}>Product Name : {product.name}</Text>
-          ) : null}
-          {product ? (
-            <Text style={styles.centerText}>Temperature : {product.temp}</Text>
-          ) : null}
-          {product ? (
-            <Text style={styles.centerText}>Quantity : {product.totalQty}</Text>
-          ) : null}
-          {product ? (
-            <Text style={styles.centerText}>subTotal : {product.subTotal}</Text>
-          ) : null}
-          {product ? (
-            <Text style={styles.centerText}>Total : {product.totalValue}</Text>
-          ) : null}
-        </View>
+        <Text style={styles.title2}>
+          For{'\n'}New{'\n'}Experience
+        </Text>
 
         <Modal
           animationType="slide"
-          transparent={true}
+          transparent={modalVisible1}
+          visible={modalVisible1}
+          onRequestClose={() => {
+            // Alert.alert('Modal has been closed.');
+            setModalVisible1(!modalVisible1);
+          }}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <View>{WholeNews()}</View>
+              <TouchableOpacity
+                style={[styles.button, styles.buttonOpen]}
+                onPress={() => setModalVisible(!modalVisible)}>
+                <Text style={styles.textStyle}>Proceed</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+        <Modal
+          animationType="slide"
+          transparent={false}
           visible={modalVisible}
           onRequestClose={() => {
             // Alert.alert('Modal has been closed.');
             setModalVisible(!modalVisible);
           }}>
           <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={styles.title}>Confirm Payment</Text>
-              <Text style={styles.centerText}>Total: {product.subTotal}</Text>
-              <TouchableOpacity
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => setModalVisible(!modalVisible)}>
-                <Text style={styles.textStyle}>Confirm</Text>
-              </TouchableOpacity>
-            </View>
+            {product ? (
+              <View style={styles.modalView}>
+                <Text style={styles.title}>Confirm Payment</Text>
+                <Text style={styles.centerText}>Total: {product.subTotal}</Text>
+                <TouchableOpacity
+                  style={[styles.button, styles.buttonClose]}
+                  onPress={() => setModalVisible(!modalVisible)}>
+                  <Text style={styles.textStyle}>Confirm</Text>
+                </TouchableOpacity>
+              </View>
+            ) : null}
           </View>
         </Modal>
         <TouchableOpacity
           style={[styles.button, styles.buttonOpen]}
-          onPress={() => setModalVisible(!modalVisible)}>
-          <Text style={styles.textStyle}>Show Modal</Text>
+          onPress={() => info()}>
+          <Text style={styles.textStyle}>Info</Text>
         </TouchableOpacity>
-      </View>
+      </ImageBackground>
     </StoreProvider>
   );
 }
@@ -190,16 +248,20 @@ const styles = StyleSheet.create({
     alignContent: 'center',
   },
   button: {
-    borderRadius: 2,
+    borderRadius: 20,
     padding: 10,
     elevation: 2,
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
   },
   buttonOpen: {
-    backgroundColor: '#2196F3',
+    backgroundColor: COLORS.primary,
   },
   buttonClose: {
     backgroundColor: '#2196F3',
     marginTop: 30,
+    borderRadius: 20,
   },
   textStyle: {
     color: 'white',
@@ -213,18 +275,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-around',
+    // justifyContent: 'space-around',
     alignContent: 'center',
     flexDirection: 'column',
   },
   proCon: {
-    height: SIZES.height * 0.5,
+    height: SIZES.height * 0.2,
     width: SIZES.width * 0.8,
     borderRadius: 10,
     overflow: 'hidden',
     justifyContent: 'center',
-    // alignItems: 'flex0-',
-    // alignContent: 'center',
+    display: 'flex',
     shadowColor: '#111',
     shadowOpacity: 0.1,
     elevation: 5,
@@ -232,15 +293,36 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: 'SMARC___',
+    fontSize: 40,
+    fontWeight: 'bold',
+    color: COLORS.primary,
+    marginRight: 30,
+    textAlign: 'right',
+    width: SIZES.width,
+  },
+  title2: {
+    fontFamily: 'SMARC___',
     fontSize: 35,
     fontWeight: 'bold',
-    color: COLORS.black,
-    textAlign: 'center',
+    color: COLORS.secondary,
+    // marginLeft: SIZES.width / 2,
+    textAlign: 'right',
+    width: SIZES.width,
+    marginRight: 30,
+    marginTop: -10,
+  },
+  popText: {
+    fontFamily: 'SMARC___',
+    fontSize: 15,
+    color: COLORS.secondary,
+    marginLeft: 20,
+    textAlign: 'left',
+    width: SIZES.width,
   },
   centerText: {
     textAlign: 'left',
     fontSize: 22,
-    marginTop: 30,
+    // marginTop: 30,
     marginLeft: 30,
     padding: 2,
     color: '#777',
