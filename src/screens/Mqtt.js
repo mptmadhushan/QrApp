@@ -62,7 +62,7 @@ export default class MQTTConnection {
 
   onMQTTFailure = () => {
     // onMQTTLost();
-    console.log('fail')
+    console.log('fail');
   };
 
   subscribeChannel(channel) {

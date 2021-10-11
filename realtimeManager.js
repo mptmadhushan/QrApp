@@ -73,6 +73,7 @@ module.exports = {
 
   onMessageArrived(message) {
     if (message) {
+      // return message;
       console.log(`MQTT New message: ${JSON.stringify(message)}`);
     }
   },
