@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Modal,
   Text,
+  Image,
   ImageBackground,
   Button,
 } from 'react-native';
@@ -115,6 +116,7 @@ export default function App() {
           console.log('product', product);
 
           setProduct(prevArray => [...prevArray, newProduct]);
+          console.log('product', product);
         }
         if (strFirstThree === '#STP') {
           console.log('product--<', product);
@@ -150,11 +152,23 @@ export default function App() {
     return product.map(function (pro, i) {
       return (
         <View key={i} style={styles.proCon}>
-          <Text style={styles.popText}>Product Name :{pro.name}</Text>
-          <Text style={styles.popText}>Temperature :{pro.temp}</Text>
-          <Text style={styles.popText}>Quantity :{pro.totalQty}</Text>
-          <Text style={styles.popText}>Sub Total :{pro.subTotal}</Text>
-          <Text style={styles.popText}>Total :{pro.totalValue}</Text>
+          <View>
+            <Image
+              source={require('./src/assets/images/cart.png')}
+              style={{
+                marginLeft: SIZES.width * 0.5,
+                width: SIZES.width * 0.15,
+                height: SIZES.width * 0.15,
+              }}
+            />
+          </View>
+          <View>
+            <Text style={styles.popText}>Product Name :{pro.name}</Text>
+            <Text style={styles.popText}>Temperature :{pro.temp}</Text>
+            <Text style={styles.popText}>Quantity :{pro.totalQty}</Text>
+            <Text style={styles.popText}>Sub Total :{pro.subTotal}</Text>
+            <Text style={styles.popText}>Total :{pro.totalValue}</Text>
+          </View>
         </View>
       );
     });
@@ -184,6 +198,11 @@ export default function App() {
               <TouchableOpacity
                 style={[styles.button, styles.buttonOpen]}
                 onPress={() => setModalVisible(!modalVisible)}>
+                <Text style={styles.textStyle}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.button2, styles.buttonOpen]}
+                onPress={() => setModalVisible(!modalVisible)}>
                 <Text style={styles.textStyle}>Proceed</Text>
               </TouchableOpacity>
             </View>
@@ -200,7 +219,7 @@ export default function App() {
           <View style={styles.centeredView}>
             {product ? (
               <View style={styles.modalView}>
-                <Text style={styles.title}>Confirm Payment</Text>
+                <Text style={styles.titlenew}>Confirm Payment</Text>
                 <Text style={styles.centerText}>Total: {product.subTotal}</Text>
                 <TouchableOpacity
                   style={[styles.button, styles.buttonClose]}
@@ -230,7 +249,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 20,
-    height: SIZES.height * 0.5,
+    height: SIZES.height * 0.6,
     width: SIZES.width * 0.9,
     backgroundColor: 'white',
     borderRadius: 20,
@@ -254,6 +273,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 20,
     right: 20,
+  },
+  button2: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+    position: 'absolute',
+    bottom: 20,
+    right: 100,
   },
   buttonOpen: {
     backgroundColor: COLORS.primary,
@@ -282,13 +309,13 @@ const styles = StyleSheet.create({
   proCon: {
     height: SIZES.height * 0.2,
     width: SIZES.width * 0.8,
-    borderRadius: 10,
-    overflow: 'hidden',
     justifyContent: 'center',
-    display: 'flex',
-    shadowColor: '#111',
-    shadowOpacity: 0.1,
-    elevation: 5,
+    alignItems: 'center',
+    alignContent: 'center',
+    flexDirection: 'row',
+    borderWidth: 1,
+    borderRadius: 20,
+    // elevation: 1,
     marginBottom: 10,
   },
   title: {
@@ -298,6 +325,14 @@ const styles = StyleSheet.create({
     color: COLORS.primary,
     marginRight: 30,
     textAlign: 'right',
+    width: SIZES.width,
+  },
+  titlenew: {
+    fontFamily: 'SMARC___',
+    fontSize: 40,
+    fontWeight: 'bold',
+    color: COLORS.primary,
+    textAlign: 'center',
     width: SIZES.width,
   },
   title2: {
@@ -323,7 +358,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     fontSize: 22,
     // marginTop: 30,
-    marginLeft: 30,
+    // marginLeft: 30,
     padding: 2,
     color: '#777',
   },
